@@ -1,1 +1,54 @@
-<p>history works!</p>
+<div class="container p-3 bg-light rounded">
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+      <h5>สถิติการลาประจำเดือน</h5>
+      <small class="text-muted">ข้อมูลการลาของพนักงานทั้งหมด</small>
+    </div>
+    <button class="btn btn-success" (click)="exportExcel()">Export Excel</button>
+  </div>
+
+  <div class="card p-3 mb-3">
+    <label>เดือน</label>
+    <input type="month" class="form-control mb-3" [(ngModel)]="selectedMonth" (change)="loadData()" />
+
+    <label>สถานะ</label>
+    <select class="form-select" [(ngModel)]="selectedDepartment" (change)="loadData()">
+      <option value="">ทั้งหมด</option>
+      <option *ngFor="let dept of departments" [value]="dept">{{dept}}</option>
+    </select>
+  </div>
+
+  <div class="card p-3 mb-3">
+    <h6>สรุปการลาตามประเภท</h6>
+    <canvas id="leaveChart"></canvas>
+  </div>
+
+  <div class="card p-3">
+    <h6>รายละเอียดการลากรบุคคล</h6>
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>ชื่อ-นามสกุล</th>
+          <th>แผนก</th>
+          <th>ลาป่วย</th>
+          <th>ลากิจ</th>
+          <th>ลาพักร้อน</th>
+          <th>รวม</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of filteredUsers">
+          <td>{{user.name}}</td>
+          <td>{{user.department}}</td>
+          <td>{{user.sickLeave}}</td>
+          <td>{{user.personalLeave}}</td>
+          <td>{{user.vacationLeave}}</td>
+          <td>{{user.sickLeave + user.personalLeave + user.vacationLeave}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+

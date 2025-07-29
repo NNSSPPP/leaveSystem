@@ -1,1 +1,38 @@
-<app-dashboard></app-dashboard>
+<!-- header.component.html -->
+<div class="bg-primary text-white py-3 shadow-sm">
+  <div class="container d-flex justify-content-between align-items-center">
+    <h5 class="mb-0 fw-bold">ระบบลางาน</h5>
+
+    <!-- <div class="d-flex align-items-center">
+      <span class="me-3">👤 สวัสดี, คุณสมชาย</span>
+      <button class="btn btn-outline-light btn-sm">ออกจากระบบ</button>
+    </div> -->
+  </div>
+</div>
+
+<div class="container">
+<ul class="nav nav-tabs mt-3">
+  <li class="nav-item">
+    <button class="nav-link" [class.active]="tab === 'dashboard'" (click)="tab = 'dashboard'">แดชบอร์ด</button>
+  </li>
+  <li class="nav-item">
+    <button class="nav-link" [class.active]="tab === 'request'" (click)="tab = 'request'">ขอลางาน</button>
+  </li>
+  <li class="nav-item">
+    <button class="nav-link" [class.active]="tab === 'history'" (click)="tab = 'history'">ประวัติการลา</button>
+  </li>
+</ul>
+
+<div class="mt-4">
+
+    <div *ngIf="tab === 'dashboard'">
+      <app-dashboard></app-dashboard>
+    </div>
+    <div *ngIf="tab === 'request'">
+      <app-requestform></app-requestform>
+    </div>
+    <div *ngIf="tab === 'history'">
+      <app-history></app-history>
+    </div>
+  </div>
+</div>

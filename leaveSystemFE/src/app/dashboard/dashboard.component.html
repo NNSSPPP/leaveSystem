@@ -1,62 +1,59 @@
-<header class="main-header">
-  <div class="logo">ระบบจัดการการลา</div>
-</header>
-
-<div class="dashboard-container">
-  <ul class="tabs">
-    <li (click)="selectedTab = 0" [class.active]="selectedTab === 0">แดชบอร์ด</li>
-    <li (click)="selectedTab = 1" [class.active]="selectedTab === 1">แบบฟอร์มการลา</li>
-    <li (click)="selectedTab = 2" [class.active]="selectedTab === 2">ประวัติการลา</li>
-  </ul>
-
-  <div *ngIf="selectedTab === 0" class="tab-content">
-    <div class="summary-section">
-      <div class="summary-card">
-        <div class="icon-box">📅</div>
-        วันลาที่ใช้ไป <b>{{ used }}</b> วัน
-      </div>
-      <div class="summary-card">
-        <div class="icon-box">⏳</div>
-        ลารออนุมัติ <b>{{ pending }}</b> รายการ
-      </div>
-      <div class="summary-card">
-        <div class="icon-box">🗂️</div>
-        วันลาทั้งหมดปีนี้ <b>{{ total }}</b> วัน
-      </div>
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card shadow-sm border-start border-primary border-5">
+            <div class="card-body">
+                <h6>วันลาคงเหลือ</h6>
+                <h4 class="text-primary fw-bold">10 วัน</h4>
+            </div>
+        </div>
     </div>
 
-    <h3>รายการลาล่าสุด</h3>
-    <table class="simple-table">
-      <thead>
-        <tr>
-          <th>วันที่</th>
-          <th>ประเภท</th>
-          <th>จำนวนวัน</th>
-          <th>สถานะ</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of recentLeaves">
-          <td>{{ item.date }}</td>
-          <td>{{ item.type }}</td>
-          <td>{{ item.days }} วัน</td>
-          <td>
-            <span [class.status-pending]="item.status === 'รออนุมัติ'"
-                  [class.status-approved]="item.status !== 'รออนุมัติ'">
-              {{ item.status }}
-            </span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm border-start border-success border-5">
+            <div class="card-body">
+                <h6>คำขอรอดำเนินการ</h6>
+                <h4 class="text-success fw-bold">2 รายการ</h4>
+            </div>
+        </div>
+    </div>
 
-  <div *ngIf="selectedTab === 1" class="tab-content">
-    <app-requestform></app-requestform>
-  </div>
-
-  <div *ngIf="selectedTab === 2" class="tab-content">
-    <app-history></app-history>
-  </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm border-start border-purple border-5">
+            <div class="card-body">
+                <h6>ลาทั้งหมดปีนี้</h6>
+                <h4 class="text-dark fw-bold">15 วัน</h4>
+            </div>
+        </div>
+    </div>
 </div>
 
+<!-- Leave History Table -->
+<div class="mt-5">
+    <h5 class="fw-bold mb-3">รายการล่าสุด</h5>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>วันที่</th>
+                    <th>ประเภท</th>
+                    <th>จำนวนวัน</th>
+                    <th>สถานะ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>10-15 ก.พ. 2567</td>
+                    <td>ลาพักร้อน</td>
+                    <td>5 วัน</td>
+                    <td><span class="badge bg-warning text-dark">รออนุมัติ</span></td>
+                </tr>
+                <tr>
+                    <td>5 ม.ค. 2567</td>
+                    <td>ลาป่วย</td>
+                    <td>1 วัน</td>
+                    <td><span class="badge bg-success">อนุมัติแล้ว</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

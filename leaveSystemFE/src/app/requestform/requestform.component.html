@@ -1,1 +1,48 @@
-<p>requestform works!</p>
+
+  <div class="container">
+    <div class="bg-white p-4 rounded shadow-sm">
+
+      <!-- Head -->
+      <div class="mb-4 border-bottom pb-2">
+        <h5 class="fw-bold">
+          <i class="bi bi-calendar3 me-2 text-primary"></i>
+          แบบฟอร์มขอลางาน
+        </h5>
+      </div>
+      <div>
+        <form>
+
+          <div class="mb-3">
+            <label class="form-label">ประเภทการลา</label>
+            <select class="form-select" required>
+              <option selected disabled>เลือกประเภทการลา</option>
+              <option value="sick">ลาป่วย</option>
+              <option value="vacation">ลาพักร้อน</option>
+              <option value="personal">ลากิจ</option>
+            </select>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label">วันที่เริ่มต้น</label>
+              <input type="date" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">วันที่สิ้นสุด</label>
+              <input type="date" class="form-control" required>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">เหตุผลการลา</label>
+            <textarea class="form-control" rows="4" placeholder="กรอกเหตุผลการลา..."></textarea>
+          </div>
+
+          <div class="d-flex justify-content-end gap-2">
+            <button type="reset" class="btn btn-secondary">ยกเลิก</button>
+            <button type="submit" class="btn btn-primary">ส่งคำขอลา</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
