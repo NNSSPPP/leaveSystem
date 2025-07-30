@@ -120,7 +120,9 @@ ng serve
 
 # Confess
 
-* Don't do sonarqube eith leaveSystemFE and leaveSystemFE
+* Don't do sonarqube with leaveSystemFE and leaveSystemFE.
+* Frontend and Backend don't connent because I don't add @CrossOrigin(origins = "http://localhost:4200") after @RequestMapping at LeaverequestsController and LeaveBalanceController.
+* Dashboard part balance leave day count all user when manager apporve but useday count only one user.
 
 
 
