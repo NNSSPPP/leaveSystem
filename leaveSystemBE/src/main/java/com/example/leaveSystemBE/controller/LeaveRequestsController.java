@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/leave-requests")
@@ -29,8 +30,11 @@ public class LeaveRequestsController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LeaveRequestsEntity> updateStatus(@PathVariable int id, @RequestParam String status) {
-        LeaveRequestsEntity updated = leaveRequestsService.updateStatus(id, status);
+    public ResponseEntity<LeaveRequestsEntity> updateStatus(@PathVariable int id,   @RequestBody Map<String, String> payload) {
+        String status = payload.get("status");
+        String approvalNote = payload.get("approvalNote");
+
+        LeaveRequestsEntity updated = leaveRequestsService.updateStatus(id, status, approvalNote);
         return ResponseEntity.ok(updated);
     }
 }

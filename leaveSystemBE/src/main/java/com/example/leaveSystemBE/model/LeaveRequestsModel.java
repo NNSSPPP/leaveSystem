@@ -12,12 +12,15 @@ public class LeaveRequestsModel {
     private String status;
     private String reason;
     private Date createdDate;
+    private String approvalNote;
+    private String username;
+    private String department;
 
     public LeaveRequestsModel() {
         //constructor
     }
 
-    public LeaveRequestsModel(int id, int userId, int leaveTypeId, Date startDate, Date endDate,String status, String reason, Date createdDate) {
+    public LeaveRequestsModel(int id, int userId, int leaveTypeId, Date startDate, Date endDate, String status, String reason, Date createdDate, String approvalNote ,String username,String department) {
         this.id = id;
         this.userId = userId;
         this.leaveTypeId = leaveTypeId;
@@ -26,6 +29,9 @@ public class LeaveRequestsModel {
         this.status = status;
         this.reason = reason;
         this.createdDate = createdDate;
+        this.approvalNote = approvalNote;
+        this.username = username;
+        this.department = department;
     }
 
     public int getId() {
@@ -90,5 +96,29 @@ public class LeaveRequestsModel {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public String getApprovalNote() {
+        return approvalNote;
+    }
+
+    public void setApprovalNote(String approvalNote) {
+        this.approvalNote = approvalNote;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
 }

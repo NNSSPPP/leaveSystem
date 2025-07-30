@@ -1,0 +1,70 @@
+<div class="container my-4">
+  <h3 class="mb-3 fw-bold">รายการขออนุมัติการลา</h3>
+  <p class="text-muted">รายการที่รอการอนุมัติทั้งหมด {{ leaveRequests.length }} รายการ</p>
+
+  <div *ngFor="let leave of leaveRequests; let i = index" class="card mb-4 shadow-sm leave-card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <div>
+        <h5 class="mb-0">{{ leave.username }}</h5>
+        <p class="text-secondary">{{ leave.department }}</p>
+      </div>
+      <div
+        class="badge px-3 py-2 fw-semibold leave-status-badge"
+        [ngClass]="{
+          'bg-warning text-dark': leave.status === 'รออนุมัติ',
+          'bg-success': leave.status === 'อนุมัติ',
+          'bg-danger': leave.status === 'ไม่อนุมัติ'
+        }">
+        {{ leave.status }}
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">ประเภทการลา</label>
+          <p class="mb-1">{{ getLeaveTypeName(leave.leaveTypeId) }}</p>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">จำนวนวัน</label>
+          <p class="mb-1">{{ leave.totalDays }} วัน</p>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">วันที่เริ่มต้น</label>
+          <p class="mb-1">{{ leave.startDate | date:'yyyy-MM-dd' }}</p>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">วันที่สิ้นสุด</label>
+          <p class="mb-1">{{ leave.endDate | date:'yyyy-MM-dd' }}</p>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-12">
+          <label class="form-label fw-semibold">เหตุผลการลา</label>
+          <p class="mb-1">{{ leave.reason }}</p>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="comment-{{i}}" class="form-label fw-semibold">ความคิดเห็น</label>
+        <textarea
+          id="comment-{{i}}"
+          class="form-control"
+          rows="2"
+          placeholder="เพิ่มความคิดเห็น (ถ้ามี)"
+          [(ngModel)]="leave.approvalNote"
+        ></textarea>
+      </div>
+
+      <div class="d-flex justify-content-end gap-2">
+        <button class="btn btn-danger" (click)="rejectLeave(i)">ไม่อนุมัติ</button>
+        <button class="btn btn-success" (click)="approveLeave(i)">อนุมัติ</button>
+      </div>
+    </div>
+  </div>
+</div>
+

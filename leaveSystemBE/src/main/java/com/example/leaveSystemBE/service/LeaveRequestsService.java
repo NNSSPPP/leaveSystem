@@ -25,18 +25,28 @@ public class LeaveRequestsService {
     @Autowired
     private LeaveTypesRepository  leaveTypesRepository;
 
+    @Autowired
+    private LeaveBalancesService leaveBalancesService;
+
+    //save leaverequests
     public LeaveRequestsEntity createLeaveRequest(LeaveRequestsModel model) {
-        LeaveRequestsEntity entity = new LeaveRequestsEntity();
-        entity.setUsersEntity(usersRepository.findById(model.getUserId()).orElseThrow());
-        entity.setLeaveTypesEntity(leaveTypesRepository.findById(model.getLeaveTypeId()).orElseThrow());
-        entity.setReason(model.getReason());
-        entity.setStartDate(model.getStartDate());
-        entity.setEndDate(model.getEndDate());
-        entity.setStatus(LeaveStatus.PENDING);
-        entity.setCreatedDate(new Date());
-        return leaveRequestsRepository.save(entity);
+        try {
+            LeaveRequestsEntity entity = new LeaveRequestsEntity();
+            entity.setUsersEntity(usersRepository.findById(model.getUserId()).orElseThrow(() -> new RuntimeException("User not found")));
+            entity.setLeaveTypesEntity(leaveTypesRepository.findById(model.getLeaveTypeId()).orElseThrow(() -> new RuntimeException("LeaveType not found")));
+            entity.setReason(model.getReason());
+            entity.setStartDate(model.getStartDate());
+            entity.setEndDate(model.getEndDate());
+            entity.setStatus(LeaveStatus.PENDING);
+            entity.setCreatedDate(new Date());
+            return leaveRequestsRepository.save(entity);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
+    //search each user leaverequest
     public List<LeaveRequestsModel> getLeaveRequests(Integer userId) {
         List<LeaveRequestsEntity> entities;
         if (userId == null) {
@@ -55,22 +65,35 @@ public class LeaveRequestsService {
             model.setReason(e.getReason());
             model.setStartDate(e.getStartDate());
             model.setEndDate(e.getEndDate());
-            model.setStatus(e.getStatus().name()); // ส่งกลับเป็น String
+            model.setStatus(e.getStatus().name());
+            model.setCreatedDate(e.getCreatedDate());
+            model.setUsername(e.getUsersEntity().getUsername());
+            model.setDepartment(e.getUsersEntity().getDepartment());
             return model;
         }).toList();
     }
 
-    public LeaveRequestsEntity updateStatus(int id, String status) {
+    //update status
+    public LeaveRequestsEntity updateStatus(int id, String status,String approvalNote) {
         LeaveRequestsEntity entity = leaveRequestsRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("ไม่พบคำขอลา ID: " + id));
+        LeaveStatus newStatus;
 
         try {
-            LeaveStatus newStatus = LeaveStatus.valueOf(status.toUpperCase());
+            newStatus = LeaveStatus.valueOf(status.toUpperCase());
             entity.setStatus(newStatus);
         } catch (IllegalArgumentException e) {
             throw new RuntimeException("สถานะไม่ถูกต้อง: " + status);
         }
 
-        return leaveRequestsRepository.save(entity);
+        entity.setApprovalNote(approvalNote);
+
+        LeaveRequestsEntity savedEntity = leaveRequestsRepository.save(entity);
+
+        if (newStatus == LeaveStatus.APPROVED) {
+            leaveBalancesService.calBalanceIfApproved(savedEntity);
+        }
+
+        return savedEntity;
     }
 }

@@ -7,56 +7,86 @@ public class LeaveBalancesModel {
     private int leaveTypeId;
     private int year;
     private int remainingDays;
+    private int usedDays;
+    private int totalDays;
 
     public LeaveBalancesModel() {
         // constructor
     }
 
-    public LeaveBalancesModel(int id, int userId, int leaveTypeId, int year, int remainingDays) {
+    public LeaveBalancesModel(int id, int userId, int leaveTypeId, int year, int remainingDays,int usedDays,int totalDays) {
         this.id = id;
         this.userId = userId;
         this.leaveTypeId = leaveTypeId;
         this.year = year;
         this.remainingDays = remainingDays;
+        this.usedDays = usedDays;
+        this.totalDays = totalDays;
     }
 
     public int getId() {
+
         return id;
     }
 
     public void setId(int id) {
+
         this.id = id;
     }
 
     public int getUserId() {
+
         return userId;
     }
 
     public void setUserId(int userId) {
+
         this.userId = userId;
     }
 
     public int getLeaveTypeId() {
+
         return leaveTypeId;
     }
 
     public void setLeaveTypeId(int leaveTypeId) {
+
         this.leaveTypeId = leaveTypeId;
     }
 
     public int getYear() {
+
         return year;
     }
 
     public void setYear(int year) {
+
         this.year = year;
     }
 
     public int getRemainingDays() {
+
         return remainingDays;
     }
 
     public void setRemainingDays(int remainingDays) {
+
         this.remainingDays = remainingDays;
+    }
+
+    public int getUsedDays() {
+        return usedDays;
+    }
+
+    public void setUsedDays(int usedDays) {
+        this.usedDays = usedDays;
+    }
+
+    public int getTotalDays() {
+        return totalDays;
+    }
+
+    public void setTotalDays(int totalDays) {
+        this.totalDays = totalDays;
     }
 }

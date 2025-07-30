@@ -41,6 +41,9 @@ public class LeaveRequestsEntity {
     @Column(name = "created_date")
     private Date createdDate;
 
+    @Column(name = "approval_note")
+    private String approvalNote;
+
     public int getId() {
         return id;
     }
@@ -104,4 +107,14 @@ public class LeaveRequestsEntity {
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
+
+    public String getApprovalNote() {
+        return approvalNote;
+    }
+
+    public void setApprovalNote(String approvalNote) {
+        this.approvalNote = approvalNote;
+    }
+
+
 }

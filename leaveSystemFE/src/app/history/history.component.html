@@ -1,54 +1,59 @@
-<div class="container p-3 bg-light rounded">
+<div class="container p-3 bg-body rounded">
 
   <div class="d-flex justify-content-between align-items-center mb-3">
     <div>
-      <h5>สถิติการลาประจำเดือน</h5>
-      <small class="text-muted">ข้อมูลการลาของพนักงานทั้งหมด</small>
+      <h5 class="fw-bold">สถิติการลาประจำเดือน</h5>
+      <p class="text-secondary">ข้อมูลการลาของพนักงานทั้งหมด</p>
     </div>
-    <button class="btn btn-success" (click)="exportExcel()">Export Excel</button>
+    <button class="btn btn-success" (click)="exportExcel()"><i class="bi bi-download"></i> Export Excel</button>
   </div>
 
-  <div class="card p-3 mb-3">
-    <label>เดือน</label>
-    <input type="month" class="form-control mb-3" [(ngModel)]="selectedMonth" (change)="loadData()" />
-
-    <label>สถานะ</label>
-    <select class="form-select" [(ngModel)]="selectedDepartment" (change)="loadData()">
-      <option value="">ทั้งหมด</option>
-      <option *ngFor="let dept of departments" [value]="dept">{{dept}}</option>
+  <div class="card p-3 mb-3 bg-body-tertiary">
+    <label class="text-body">ประเภทลา</label>
+    <select [(ngModel)]="selectedLeaveTypeId" (change)="callApi()" class="form-select mb-3">
+      <option [ngValue]="null">ทั้งหมด</option>
+      <option [ngValue]="1">ลาพักร้อน</option>
+      <option [ngValue]="2">ลาป่วย</option>
+      <option [ngValue]="3">ลากิจ</option>
     </select>
+    <label class="text-body">สถานะ</label>
+    <select [(ngModel)]="selectedStatus" (change)="callApi()" class="form-select">
+      <option value="">ทั้งหมด</option>
+      <option *ngFor="let s of status" [value]="s">{{ s }}</option>
+    </select>
+
   </div>
 
-  <div class="card p-3 mb-3">
-    <h6>สรุปการลาตามประเภท</h6>
+  <div class="card p-3 mb-3 bg-body-tertiary">
+    <h6 class="text-body">สรุปการลาตามประเภท</h6>
     <canvas id="leaveChart"></canvas>
   </div>
 
-  <div class="card p-3">
-    <h6>รายละเอียดการลากรบุคคล</h6>
+  <div class="card p-3 bg-body-tertiary">
+    <h6 class="text-body">รายละเอียดการลารายบุคคล</h6>
     <table class="table table-bordered table-hover">
-      <thead>
+      <thead class="table-light">
         <tr>
           <th>ชื่อ-นามสกุล</th>
           <th>แผนก</th>
           <th>ลาป่วย</th>
-          <th>ลากิจ</th>
           <th>ลาพักร้อน</th>
+          <th>ลากิจ</th>
           <th>รวม</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of filteredUsers">
-          <td>{{user.name}}</td>
-          <td>{{user.department}}</td>
-          <td>{{user.sickLeave}}</td>
-          <td>{{user.personalLeave}}</td>
-          <td>{{user.vacationLeave}}</td>
-          <td>{{user.sickLeave + user.personalLeave + user.vacationLeave}}</td>
+        <tr *ngFor="let u of filteredUsers">
+          <td>{{ u.username }}</td>
+          <td>{{ u.department }}</td>
+          <td>{{ u.sick }}</td>
+          <td>{{ u.vacation }}</td>
+          <td>{{ u.personal }}</td>
+          <td>{{ u.sick + u.vacation+u.personal }}</td>
         </tr>
+
       </tbody>
     </table>
   </div>
 
 </div>
-

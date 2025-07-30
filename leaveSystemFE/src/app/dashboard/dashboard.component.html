@@ -1,59 +1,68 @@
-<div class="row mt-4">
-    <div class="col-md-4">
-        <div class="card shadow-sm border-start border-primary border-5">
-            <div class="card-body">
-                <h6>วันลาคงเหลือ</h6>
-                <h4 class="text-primary fw-bold">10 วัน</h4>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="card shadow-sm border-start border-success border-5">
-            <div class="card-body">
-                <h6>คำขอรอดำเนินการ</h6>
-                <h4 class="text-success fw-bold">2 รายการ</h4>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="card shadow-sm border-start border-purple border-5">
-            <div class="card-body">
-                <h6>ลาทั้งหมดปีนี้</h6>
-                <h4 class="text-dark fw-bold">15 วัน</h4>
+<div class="col">
+    <div class="card shadow-sm border-start border-2 border-success">
+        <div class="card-body d-flex align-items-center">
+            <i class="bi bi-calendar fs-3 text-success me-3"></i>
+            <div>
+                <h6 class="text-muted">วันลาคงเหลือ</h6>
+                <h4 class="fw-bold text-success">{{ totalDays - sumUsedDays()}} วัน</h4>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Leave History Table -->
-<div class="mt-5">
-    <h5 class="fw-bold mb-3">รายการล่าสุด</h5>
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped align-middle">
-            <thead class="table-light">
-                <tr>
-                    <th>วันที่</th>
-                    <th>ประเภท</th>
-                    <th>จำนวนวัน</th>
-                    <th>สถานะ</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>10-15 ก.พ. 2567</td>
-                    <td>ลาพักร้อน</td>
-                    <td>5 วัน</td>
-                    <td><span class="badge bg-warning text-dark">รออนุมัติ</span></td>
-                </tr>
-                <tr>
-                    <td>5 ม.ค. 2567</td>
-                    <td>ลาป่วย</td>
-                    <td>1 วัน</td>
-                    <td><span class="badge bg-success">อนุมัติแล้ว</span></td>
-                </tr>
-            </tbody>
-        </table>
+<div class="col">
+    <div class="card shadow-sm border-start border-2 border-warning">
+        <div class="card-body d-flex align-items-center">
+            <i class="bi bi-clock fs-3 text-warning me-3"></i>
+            <div>
+                <h6 class="text-muted">ลาที่รออนุมัติ</h6>
+                <h4 class="fw-bold text-warning">{{ pending }} รายการ</h4>
+            </div>
+        </div>
     </div>
+</div>
+
+<div class="col">
+    <div class="card shadow-sm border-start border-2 border-primary">
+        <div class="card-body d-flex align-items-center">
+            <i class="bi-file-earmark-text fs-3 text-primary me-3"></i>
+            <div>
+                <h6 class="text-muted">ลาทั้งหมดปีนี้</h6>
+                <h4 class="fw-bold text-primary">{{ sumUsedDays()}} วัน</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="table-responsive mt-4">
+    <h5 class="fw-bold">รายการล่าสุด</h5>
+    <table class="table table-bordered table-hover bg-white dark-card">
+        <thead class="table-light">
+            <tr>
+                <th>วันที่</th>
+                <th>ประเภท</th>
+                <th>จำนวนวัน</th>
+                <th>สถานะ</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let leave of recentLeaves">
+                <td>{{ formatLeaveDateRange(leave.startDate, leave.endDate) }}</td>
+                <td>{{ getLeaveTypeName(leave.leaveTypeId) }}</td>
+                <td>{{ calculateLeaveDays(leave.startDate, leave.endDate) }} วัน</td>
+                <td>
+
+                    <div class="badge px-3 py-2 fw-semibold leave-status-badge" [ngClass]="{'bg-warning text-dark': leave.status === 'PENDING',
+                                'bg-success': leave.status === 'APPROVED',
+                                'bg-danger': leave.status === 'REJECTED'
+                     }">
+                        <i *ngIf="leave.status === 'PENDING'"></i>
+                        <i *ngIf="leave.status === 'REJECTED'"></i>
+                        <i *ngIf="leave.status === 'APPROVED'"></i>
+                        {{ getStatusThai(leave.status) }}
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
